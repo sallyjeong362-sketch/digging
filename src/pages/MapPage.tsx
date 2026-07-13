@@ -6,9 +6,9 @@ import type { ExplorationNode } from '../types';
 
 function StatTile({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-center">
-      <div className="text-2xl font-bold text-stone-900">{value}</div>
-      <div className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-stone-400">{label}</div>
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-center">
+      <div className="text-2xl font-bold tabular-nums text-[var(--text)]">{value}</div>
+      <div className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-[var(--text-faint)]">{label}</div>
     </div>
   );
 }
@@ -19,12 +19,12 @@ function TreeRow({ node, nodes, lang }: { node: ExplorationNode; nodes: Record<s
     <div>
       <Link
         to={`/topic/${node.id}`}
-        className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition hover:bg-stone-50"
+        className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition hover:bg-[var(--surface-2)]"
         style={{ marginLeft: node.depth * 18 }}
       >
-        <span className="text-stone-300">{node.depth > 0 ? '↳' : '•'}</span>
-        <span className="text-stone-700">{lang === 'ko' ? node.titleKo : node.titleEn}</span>
-        {node.completed && <span className="text-xs text-emerald-600">✓</span>}
+        <span className="text-[var(--border-strong)]">{node.depth > 0 ? '↳' : '•'}</span>
+        <span className="text-[var(--text)]">{lang === 'ko' ? node.titleKo : node.titleEn}</span>
+        {node.completed && <span className="text-xs text-emerald-600 dark:text-emerald-400">✓</span>}
       </Link>
       {children.map((c) => (
         <TreeRow key={c.id} node={c} nodes={nodes} lang={lang} />
@@ -69,8 +69,8 @@ export default function MapPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-stone-900">{t(UI.map.heading, lang)}</h1>
-      <p className="mt-1 text-sm text-stone-500">{t(UI.map.subheading, lang)}</p>
+      <h1 className="text-2xl font-bold text-[var(--text)]">{t(UI.map.heading, lang)}</h1>
+      <p className="mt-1 text-sm text-[var(--text-muted)]">{t(UI.map.subheading, lang)}</p>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label={t(UI.map.statTopics, lang)} value={totalTopics} />
@@ -79,13 +79,13 @@ export default function MapPage() {
         <StatTile label={t(UI.map.statVocab, lang)} value={vocabLearned} />
       </div>
 
-      <div className="mt-4 rounded-full bg-amber-50 px-4 py-2 text-center text-sm font-semibold text-amber-700">
+      <div className="mt-4 rounded-full bg-amber-50 px-4 py-2 text-center text-sm font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
         {t(badge, lang)}
       </div>
 
       <div className="mt-8 flex flex-col gap-8">
         {selected.length === 0 && totalTopics === 0 && (
-          <p className="py-10 text-center text-sm text-stone-400">{t(UI.map.empty, lang)}</p>
+          <p className="py-10 text-center text-sm text-[var(--text-faint)]">{t(UI.map.empty, lang)}</p>
         )}
         {INTERESTS.filter((i) => selected.includes(i.id)).map((interest) => {
           const roots = nodeRootsForInterest(nodes, interest.id);
@@ -96,9 +96,9 @@ export default function MapPage() {
                 <span className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br text-base ${interest.gradient}`}>
                   {interest.emoji}
                 </span>
-                <h2 className="font-bold text-stone-900">{t(interest.name, lang)}</h2>
+                <h2 className="font-bold text-[var(--text)]">{t(interest.name, lang)}</h2>
               </div>
-              <div className="mt-2 flex flex-col gap-0.5 rounded-xl border border-stone-200 bg-white p-3">
+              <div className="mt-2 flex flex-col gap-0.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3">
                 {roots.map((root) => (
                   <TreeRow key={root.id} node={root} nodes={nodes} lang={lang} />
                 ))}
@@ -110,7 +110,7 @@ export default function MapPage() {
 
       {totalTopics > 0 && (
         <div className="mt-10 text-center">
-          <button onClick={handleReset} className="text-xs font-medium text-stone-400 hover:text-red-500 hover:underline">
+          <button onClick={handleReset} className="text-xs font-medium text-[var(--text-faint)] hover:text-red-500 hover:underline">
             {t(UI.map.resetButton, lang)}
           </button>
         </div>

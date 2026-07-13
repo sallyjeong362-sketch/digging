@@ -1,5 +1,91 @@
 @import "tailwindcss";
 
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f5f5f4;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --text: #1c1917;
+  --text-muted: #78716c;
+  --text-faint: #a8a29e;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --link: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-soft-border: #bfdbfe;
+  --accent-soft-text: #1e40af;
+
+  --ink: #292524;
+  --ink-hover: #1c1917;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16130f;
+    --surface: #221e1a;
+    --surface-2: #2a251f;
+    --border: #3a332c;
+    --border-strong: #4c443a;
+    --text: #f3ede5;
+    --text-muted: #ab9c8c;
+    --text-faint: #756a5d;
+
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --link: #93c5fd;
+    --accent-soft: #17233a;
+    --accent-soft-border: #2c4266;
+    --accent-soft-text: #bfdbfe;
+
+    --ink: #e7dfd5;
+    --ink-hover: #f3ede5;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #16130f;
+  --surface: #221e1a;
+  --surface-2: #2a251f;
+  --border: #3a332c;
+  --border-strong: #4c443a;
+  --text: #f3ede5;
+  --text-muted: #ab9c8c;
+  --text-faint: #756a5d;
+
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --link: #93c5fd;
+  --accent-soft: #17233a;
+  --accent-soft-border: #2c4266;
+  --accent-soft-text: #bfdbfe;
+
+  --ink: #e7dfd5;
+  --ink-hover: #f3ede5;
+}
+
+:root[data-theme='light'] {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f5f5f4;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --text: #1c1917;
+  --text-muted: #78716c;
+  --text-faint: #a8a29e;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --link: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-soft-border: #bfdbfe;
+  --accent-soft-text: #1e40af;
+
+  --ink: #292524;
+  --ink-hover: #1c1917;
+}
+
 html {
   scroll-behavior: smooth;
   color-scheme: light dark;
@@ -7,5 +93,7 @@ html {
 
 body {
   margin: 0;
-  @apply bg-stone-50 text-stone-900 antialiased;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }

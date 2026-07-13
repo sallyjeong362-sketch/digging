@@ -7,7 +7,7 @@ import MapPage from './pages/MapPage';
 
 function App() {
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-[var(--bg)]">
       <Header />
       <main>
         <Routes>

@@ -8,23 +8,23 @@ import { getTrail } from '../lib/tree';
 
 function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
   return (
-    <label className="flex cursor-pointer items-start gap-2.5 rounded-lg px-2 py-1.5 text-sm transition hover:bg-stone-50">
+    <label className="flex cursor-pointer items-start gap-2.5 rounded-lg px-2 py-1.5 text-sm transition hover:bg-[var(--surface-2)]">
       <input
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="mt-0.5 h-4 w-4 shrink-0 accent-blue-600"
+        className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--accent)]"
       />
-      <span className={checked ? 'text-stone-400 line-through' : 'text-stone-700'}>{label}</span>
+      <span className={checked ? 'text-[var(--text-faint)] line-through' : 'text-[var(--text)]'}>{label}</span>
     </label>
   );
 }
 
 function SectionCard({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
-      <h2 className="text-base font-bold text-stone-900">{title}</h2>
-      {desc && <p className="mt-1 text-xs leading-relaxed text-stone-500">{desc}</p>}
+    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+      <h2 className="text-base font-bold text-[var(--text)]">{title}</h2>
+      {desc && <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">{desc}</p>}
       <div className="mt-4">{children}</div>
     </section>
   );
@@ -55,10 +55,10 @@ export default function TopicPage() {
 
   if (!node) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center text-stone-500">
+      <div className="mx-auto max-w-2xl px-4 py-16 text-center text-[var(--text-muted)]">
         {lang === 'ko' ? '주제를 찾을 수 없어요.' : 'Topic not found.'}
         <div className="mt-4">
-          <Link to="/explore" className="text-blue-600 hover:underline">{t(UI.topic.backToExplore, lang)}</Link>
+          <Link to="/explore" className="text-[var(--link)] hover:underline">{t(UI.topic.backToExplore, lang)}</Link>
         </div>
       </div>
     );
@@ -92,15 +92,15 @@ export default function TopicPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {/* Trail / breadcrumb */}
-      <div className="mb-4 flex flex-wrap items-center gap-1 text-xs text-stone-500">
-        <Link to="/explore" className="font-medium text-blue-600 hover:underline">
+      <div className="mb-4 flex flex-wrap items-center gap-1 text-xs text-[var(--text-muted)]">
+        <Link to="/explore" className="font-medium text-[var(--link)] hover:underline">
           {interest ? `${interest.emoji} ${t(interest.name, lang)}` : t(UI.nav.explore, lang)}
         </Link>
         {trail.map((n) => (
           <span key={n.id} className="flex items-center gap-1">
-            <span className="text-stone-300">/</span>
+            <span className="text-[var(--border-strong)]">/</span>
             {n.id === node.id ? (
-              <span className="font-semibold text-stone-700">{lang === 'ko' ? n.titleKo : n.titleEn}</span>
+              <span className="font-semibold text-[var(--text)]">{lang === 'ko' ? n.titleKo : n.titleEn}</span>
             ) : (
               <Link to={`/topic/${n.id}`} className="hover:underline">
                 {lang === 'ko' ? n.titleKo : n.titleEn}
@@ -112,14 +112,14 @@ export default function TopicPage() {
 
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <span className="inline-block rounded-full bg-stone-100 px-2.5 py-1 text-[11px] font-semibold text-stone-500">
+          <span className="inline-block rounded-full bg-[var(--surface-2)] px-2.5 py-1 text-[11px] font-semibold text-[var(--text-muted)]">
             {t(UI.explore.depthLabel, lang)} {node.depth + 1}
           </span>
-          <h1 className="mt-2 text-2xl font-bold text-stone-900">{title}</h1>
-          {seed && <p className="mt-1 text-sm text-stone-500">{t(seed.blurb, lang)}</p>}
+          <h1 className="mt-2 text-2xl font-bold text-[var(--text)]">{title}</h1>
+          {seed && <p className="mt-1 text-sm text-[var(--text-muted)]">{t(seed.blurb, lang)}</p>}
         </div>
         {node.completed && (
-          <span className="shrink-0 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+          <span className="shrink-0 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
             {t(UI.topic.finished, lang)}
           </span>
         )}
@@ -133,7 +133,7 @@ export default function TopicPage() {
               href={youtubeSearchUrl(seed ? t(seed.title, lang) : videoQuery)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium text-stone-700 transition hover:border-red-300 hover:bg-red-50"
+              className="rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm font-medium text-[var(--text)] transition hover:border-red-300 hover:bg-red-50 dark:hover:border-red-800 dark:hover:bg-red-950/40"
             >
               {t(UI.topic.watchVideo, lang)}
             </a>
@@ -141,12 +141,12 @@ export default function TopicPage() {
               href={wikipediaSearchUrl(seed ? t(seed.title, lang) : videoQuery, lang)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium text-stone-700 transition hover:border-blue-300 hover:bg-blue-50"
+              className="rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent-soft-border)] hover:bg-[var(--accent-soft)]"
             >
               {t(UI.topic.readArticle, lang)}
             </a>
           </div>
-          <div className="mt-3 flex flex-col gap-0.5 border-t border-stone-100 pt-3">
+          <div className="mt-3 flex flex-col gap-0.5 border-t border-[var(--border)] pt-3">
             <Checkbox checked={node.videoDone} onChange={() => updateNode(node.id, { videoDone: !node.videoDone })} label={t(UI.topic.videoDone, lang)} />
             <Checkbox checked={node.articleDone} onChange={() => updateNode(node.id, { articleDone: !node.articleDone })} label={t(UI.topic.articleDone, lang)} />
           </div>
@@ -154,7 +154,7 @@ export default function TopicPage() {
 
         {/* Step 2 */}
         <SectionCard title={`${t(UI.topic.step2Title, lang)} (${totalVocabDone}/${totalVocab})`} desc={t(UI.topic.step2Desc, lang)}>
-          <div className="flex flex-col divide-y divide-stone-100">
+          <div className="flex flex-col divide-y divide-[var(--border)]">
             {seed?.vocabulary.map((v, i) => (
               <div key={i} className="py-1.5">
                 <Checkbox
@@ -174,18 +174,18 @@ export default function TopicPage() {
               </div>
             ))}
           </div>
-          <div className="mt-3 flex flex-col gap-2 border-t border-stone-100 pt-3 sm:flex-row">
+          <div className="mt-3 flex flex-col gap-2 border-t border-[var(--border)] pt-3 sm:flex-row">
             <input
               value={newVocabTerm}
               onChange={(e) => setNewVocabTerm(e.target.value)}
               placeholder={t(UI.topic.addVocabPlaceholderTerm, lang)}
-              className="rounded-lg border border-stone-200 px-3 py-2 text-sm sm:w-1/3"
+              className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] sm:w-1/3"
             />
             <input
               value={newVocabDef}
               onChange={(e) => setNewVocabDef(e.target.value)}
               placeholder={t(UI.topic.addVocabPlaceholderDef, lang)}
-              className="flex-1 rounded-lg border border-stone-200 px-3 py-2 text-sm"
+              className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-faint)]"
             />
             <button
               onClick={() => {
@@ -194,7 +194,7 @@ export default function TopicPage() {
                 setNewVocabDef('');
               }}
               disabled={!newVocabTerm.trim()}
-              className="rounded-lg bg-stone-800 px-4 py-2 text-sm font-semibold text-white transition enabled:hover:bg-stone-900 disabled:cursor-not-allowed disabled:bg-stone-300"
+              className="rounded-lg bg-[var(--ink)] px-4 py-2 text-sm font-semibold text-[var(--bg)] transition enabled:hover:bg-[var(--ink-hover)] disabled:cursor-not-allowed disabled:bg-[var(--border-strong)] disabled:text-[var(--text-faint)]"
             >
               {t(UI.topic.addButton, lang)}
             </button>
@@ -203,7 +203,7 @@ export default function TopicPage() {
 
         {/* Step 3 */}
         <SectionCard title={t(UI.topic.step3Title, lang)} desc={t(UI.topic.step3Desc, lang)}>
-          <div className="flex flex-col divide-y divide-stone-100">
+          <div className="flex flex-col divide-y divide-[var(--border)]">
             {seed?.facts.map((f, i) => (
               <div key={i} className="py-1.5">
                 <Checkbox checked={!!node.seedFactsChecked[i]} onChange={() => toggleSeedFact(node.id, i)} label={t(f, lang)} />
@@ -215,12 +215,12 @@ export default function TopicPage() {
               </div>
             ))}
           </div>
-          <div className="mt-3 flex gap-2 border-t border-stone-100 pt-3">
+          <div className="mt-3 flex gap-2 border-t border-[var(--border)] pt-3">
             <input
               value={newFact}
               onChange={(e) => setNewFact(e.target.value)}
               placeholder={t(UI.topic.addFactPlaceholder, lang)}
-              className="flex-1 rounded-lg border border-stone-200 px-3 py-2 text-sm"
+              className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-faint)]"
             />
             <button
               onClick={() => {
@@ -228,20 +228,20 @@ export default function TopicPage() {
                 setNewFact('');
               }}
               disabled={!newFact.trim()}
-              className="rounded-lg bg-stone-800 px-4 py-2 text-sm font-semibold text-white transition enabled:hover:bg-stone-900 disabled:cursor-not-allowed disabled:bg-stone-300"
+              className="rounded-lg bg-[var(--ink)] px-4 py-2 text-sm font-semibold text-[var(--bg)] transition enabled:hover:bg-[var(--ink-hover)] disabled:cursor-not-allowed disabled:bg-[var(--border-strong)] disabled:text-[var(--text-faint)]"
             >
               {t(UI.topic.addButton, lang)}
             </button>
           </div>
 
-          <div className="mt-5 border-t border-stone-100 pt-4">
-            <label className="mb-1.5 block text-sm font-semibold text-stone-700">{t(UI.topic.reflectionLabel, lang)}</label>
+          <div className="mt-5 border-t border-[var(--border)] pt-4">
+            <label className="mb-1.5 block text-sm font-semibold text-[var(--text)]">{t(UI.topic.reflectionLabel, lang)}</label>
             <textarea
               value={node.reflection}
               onChange={(e) => setReflection(node.id, e.target.value)}
               placeholder={t(UI.topic.reflectionPlaceholder, lang)}
               rows={5}
-              className="w-full rounded-lg border border-stone-200 p-3 text-sm leading-relaxed focus:border-blue-400 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 text-sm leading-relaxed text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30"
             />
           </div>
         </SectionCard>
@@ -250,7 +250,7 @@ export default function TopicPage() {
         <SectionCard title={t(UI.topic.step4Title, lang)} desc={t(UI.topic.step4Desc, lang)}>
           {seed && seed.followUps.length > 0 && (
             <div className="mb-3">
-              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-stone-400">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--text-faint)]">
                 {t(UI.topic.suggestedFollowUps, lang)}
               </p>
               <div className="flex flex-col gap-2">
@@ -258,7 +258,7 @@ export default function TopicPage() {
                   <button
                     key={i}
                     onClick={() => handleDigDeeperSuggested(f)}
-                    className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-left text-sm font-medium text-blue-800 transition hover:bg-blue-100"
+                    className="rounded-lg border border-[var(--accent-soft-border)] bg-[var(--accent-soft)] px-3 py-2 text-left text-sm font-medium text-[var(--accent-soft-text)] transition hover:brightness-95 dark:hover:brightness-125"
                   >
                     {t(f, lang)} →
                   </button>
@@ -272,21 +272,21 @@ export default function TopicPage() {
               value={customFollowUp}
               onChange={(e) => setCustomFollowUp(e.target.value)}
               placeholder={t(UI.topic.customFollowUpPlaceholder, lang)}
-              className="flex-1 rounded-lg border border-stone-200 px-3 py-2 text-sm"
+              className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-faint)]"
               onKeyDown={(e) => e.key === 'Enter' && handleDigDeeperCustom()}
             />
             <button
               onClick={handleDigDeeperCustom}
               disabled={!customFollowUp.trim()}
-              className="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition enabled:hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-stone-300"
+              className="shrink-0 rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition enabled:hover:bg-[var(--accent-hover)] disabled:cursor-not-allowed disabled:bg-[var(--border-strong)] disabled:text-[var(--text-faint)]"
             >
               {t(UI.topic.digDeeperButton, lang)}
             </button>
           </div>
 
           {children.length > 0 && (
-            <div className="mt-5 border-t border-stone-100 pt-4">
-              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-stone-400">
+            <div className="mt-5 border-t border-[var(--border)] pt-4">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--text-faint)]">
                 {t(UI.topic.childrenExisting, lang)}
               </p>
               <div className="flex flex-col gap-2">
@@ -294,22 +294,22 @@ export default function TopicPage() {
                   <Link
                     key={c.id}
                     to={`/topic/${c.id}`}
-                    className="flex items-center justify-between rounded-lg border border-stone-200 px-3 py-2 text-sm transition hover:border-blue-300 hover:bg-stone-50"
+                    className="flex items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:border-[var(--accent-soft-border)] hover:bg-[var(--surface-2)]"
                   >
-                    <span>{lang === 'ko' ? c.titleKo : c.titleEn}</span>
-                    {c.completed && <span className="text-xs text-emerald-600">{t(UI.topic.finished, lang)}</span>}
+                    <span className="text-[var(--text)]">{lang === 'ko' ? c.titleKo : c.titleEn}</span>
+                    {c.completed && <span className="text-xs text-emerald-600 dark:text-emerald-400">{t(UI.topic.finished, lang)}</span>}
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
-          <div className="mt-5 border-t border-stone-100 pt-4">
+          <div className="mt-5 border-t border-[var(--border)] pt-4">
             <button
               onClick={() => markCompleted(node.id, !node.completed)}
               className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
                 node.completed
-                  ? 'border border-stone-300 text-stone-500 hover:bg-stone-50'
+                  ? 'border border-[var(--border-strong)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]'
                   : 'bg-emerald-600 text-white hover:bg-emerald-700'
               }`}
             >
