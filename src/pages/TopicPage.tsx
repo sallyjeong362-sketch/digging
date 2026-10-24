@@ -5,6 +5,7 @@ import { getInterest, getSeed } from '../data/interests';
 import { UI, t } from '../data/ui';
 import { youtubeSearchUrl, wikipediaSearchUrl } from '../lib/links';
 import { getTrail } from '../lib/tree';
+import { useToast } from '../store/useToast';
 
 function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
   return (
@@ -20,13 +21,48 @@ function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: ()
   );
 }
 
-function SectionCard({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
+function SectionCard({
+  step,
+  done,
+  title,
+  desc,
+  children,
+}: {
+  step: number;
+  done: boolean;
+  title: string;
+  desc?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-      <h2 className="text-base font-bold text-[var(--text)]">{title}</h2>
-      {desc && <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">{desc}</p>}
+    <section id={`step-${step}`} className="scroll-mt-20 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+      <div className="flex items-center gap-3">
+        <span
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+            done ? 'bg-[var(--accent-2)] text-white' : 'bg-[var(--surface-2)] text-[var(--text-muted)]'
+          }`}
+        >
+          {done ? '✓' : step}
+        </span>
+        <h2 className="text-base font-bold text-[var(--text)]">{title}</h2>
+      </div>
+      {desc && <p className="mt-1.5 ml-10 text-xs leading-relaxed text-[var(--text-muted)]">{desc}</p>}
       <div className="mt-4">{children}</div>
     </section>
+  );
+}
+
+function StepRail({ steps }: { steps: boolean[] }) {
+  return (
+    <div className="mb-6 hidden items-center gap-1.5 sm:flex">
+      {steps.map((done, i) => (
+        <a
+          key={i}
+          href={`#step-${i + 1}`}
+          className={`h-1.5 flex-1 rounded-full transition ${done ? 'bg-[var(--accent-2)]' : 'bg-[var(--border)]'}`}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -45,6 +81,7 @@ export default function TopicPage() {
   const markCompleted = useAppStore((s) => s.markCompleted);
   const createCustomNode = useAppStore((s) => s.createCustomNode);
   const navigate = useNavigate();
+  const showToast = useToast((s) => s.show);
 
   const [newVocabTerm, setNewVocabTerm] = useState('');
   const [newVocabDef, setNewVocabDef] = useState('');
@@ -76,6 +113,31 @@ export default function TopicPage() {
   const totalVocab = (seed?.vocabulary.length ?? 0) + node.customVocab.length;
   const totalVocabDone = seedVocabDoneCount + customVocabDoneCount;
 
+  const step1Done = node.videoDone || node.articleDone;
+  const step2Done = totalVocab > 0 && totalVocabDone === totalVocab;
+  const step3Done = node.reflection.trim().length > 0;
+  const step4Done = node.completed || children.length > 0;
+
+  const toastMsg = (ko: string, en: string) => showToast(lang === 'ko' ? ko : en);
+
+  function handleToggleVideo() {
+    const next = !node!.videoDone;
+    updateNode(node!.id, { videoDone: next });
+    if (next) toastMsg('잘했어요! 영상 학습 완료 ⚡+3', 'Nice! Video learning done ⚡+3');
+  }
+
+  function handleToggleArticle() {
+    const next = !node!.articleDone;
+    updateNode(node!.id, { articleDone: next });
+    if (next) toastMsg('잘했어요! 글 읽기 완료 ⚡+3', 'Nice! Article reading done ⚡+3');
+  }
+
+  function handleToggleComplete() {
+    const next = !node!.completed;
+    markCompleted(node!.id, next);
+    if (next) toastMsg('탐구 완료! ⚡+20 포인트 획득', 'Branch complete! ⚡+20 points earned');
+  }
+
   function handleDigDeeperSuggested(followUp: { ko: string; en: string }) {
     const id = createCustomNode(node!.interestId, followUp.ko, followUp.en, node!.id);
     navigate(`/topic/${id}`);
@@ -90,10 +152,10 @@ export default function TopicPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto max-w-3xl px-4 py-6 sm:py-8">
       {/* Trail / breadcrumb */}
       <div className="mb-4 flex flex-wrap items-center gap-1 text-xs text-[var(--text-muted)]">
-        <Link to="/explore" className="font-medium text-[var(--link)] hover:underline">
+        <Link to="/explore" className="font-semibold text-[var(--link)] hover:underline">
           {interest ? `${interest.emoji} ${t(interest.name, lang)}` : t(UI.nav.explore, lang)}
         </Link>
         {trail.map((n) => (
@@ -110,24 +172,26 @@ export default function TopicPage() {
         ))}
       </div>
 
-      <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="mb-5 flex items-start justify-between gap-4">
         <div>
-          <span className="inline-block rounded-full bg-[var(--surface-2)] px-2.5 py-1 text-[11px] font-semibold text-[var(--text-muted)]">
+          <span className="inline-block rounded-full bg-[var(--surface-2)] px-2.5 py-1 text-[11px] font-bold text-[var(--text-muted)]">
             {t(UI.explore.depthLabel, lang)} {node.depth + 1}
           </span>
-          <h1 className="mt-2 text-2xl font-bold text-[var(--text)]">{title}</h1>
+          <h1 className="mt-2 text-2xl font-black tracking-tight text-[var(--text)]">{title}</h1>
           {seed && <p className="mt-1 text-sm text-[var(--text-muted)]">{t(seed.blurb, lang)}</p>}
         </div>
         {node.completed && (
-          <span className="shrink-0 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+          <span className="shrink-0 rounded-full bg-[var(--accent-2-soft)] px-3 py-1 text-xs font-bold text-[var(--accent-2-soft-text)]">
             {t(UI.topic.finished, lang)}
           </span>
         )}
       </div>
 
+      <StepRail steps={[step1Done, step2Done, step3Done, step4Done]} />
+
       <div className="flex flex-col gap-5">
         {/* Step 1 */}
-        <SectionCard title={t(UI.topic.step1Title, lang)} desc={t(UI.topic.step1Desc, lang)}>
+        <SectionCard step={1} done={step1Done} title={t(UI.topic.step1Title, lang)} desc={t(UI.topic.step1Desc, lang)}>
           <div className="flex flex-col gap-2">
             <a
               href={youtubeSearchUrl(seed ? t(seed.title, lang) : videoQuery)}
@@ -147,13 +211,18 @@ export default function TopicPage() {
             </a>
           </div>
           <div className="mt-3 flex flex-col gap-0.5 border-t border-[var(--border)] pt-3">
-            <Checkbox checked={node.videoDone} onChange={() => updateNode(node.id, { videoDone: !node.videoDone })} label={t(UI.topic.videoDone, lang)} />
-            <Checkbox checked={node.articleDone} onChange={() => updateNode(node.id, { articleDone: !node.articleDone })} label={t(UI.topic.articleDone, lang)} />
+            <Checkbox checked={node.videoDone} onChange={handleToggleVideo} label={t(UI.topic.videoDone, lang)} />
+            <Checkbox checked={node.articleDone} onChange={handleToggleArticle} label={t(UI.topic.articleDone, lang)} />
           </div>
         </SectionCard>
 
         {/* Step 2 */}
-        <SectionCard title={`${t(UI.topic.step2Title, lang)} (${totalVocabDone}/${totalVocab})`} desc={t(UI.topic.step2Desc, lang)}>
+        <SectionCard
+          step={2}
+          done={step2Done}
+          title={`${t(UI.topic.step2Title, lang)} (${totalVocabDone}/${totalVocab})`}
+          desc={t(UI.topic.step2Desc, lang)}
+        >
           <div className="flex flex-col divide-y divide-[var(--border)]">
             {seed?.vocabulary.map((v, i) => (
               <div key={i} className="py-1.5">
@@ -202,7 +271,7 @@ export default function TopicPage() {
         </SectionCard>
 
         {/* Step 3 */}
-        <SectionCard title={t(UI.topic.step3Title, lang)} desc={t(UI.topic.step3Desc, lang)}>
+        <SectionCard step={3} done={step3Done} title={t(UI.topic.step3Title, lang)} desc={t(UI.topic.step3Desc, lang)}>
           <div className="flex flex-col divide-y divide-[var(--border)]">
             {seed?.facts.map((f, i) => (
               <div key={i} className="py-1.5">
@@ -247,7 +316,7 @@ export default function TopicPage() {
         </SectionCard>
 
         {/* Step 4 */}
-        <SectionCard title={t(UI.topic.step4Title, lang)} desc={t(UI.topic.step4Desc, lang)}>
+        <SectionCard step={4} done={step4Done} title={t(UI.topic.step4Title, lang)} desc={t(UI.topic.step4Desc, lang)}>
           {seed && seed.followUps.length > 0 && (
             <div className="mb-3">
               <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--text-faint)]">
@@ -297,7 +366,7 @@ export default function TopicPage() {
                     className="flex items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:border-[var(--accent-soft-border)] hover:bg-[var(--surface-2)]"
                   >
                     <span className="text-[var(--text)]">{lang === 'ko' ? c.titleKo : c.titleEn}</span>
-                    {c.completed && <span className="text-xs text-emerald-600 dark:text-emerald-400">{t(UI.topic.finished, lang)}</span>}
+                    {c.completed && <span className="text-xs font-semibold text-[var(--accent-2)]">{t(UI.topic.finished, lang)}</span>}
                   </Link>
                 ))}
               </div>
@@ -306,11 +375,11 @@ export default function TopicPage() {
 
           <div className="mt-5 border-t border-[var(--border)] pt-4">
             <button
-              onClick={() => markCompleted(node.id, !node.completed)}
+              onClick={handleToggleComplete}
               className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
                 node.completed
                   ? 'border border-[var(--border-strong)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]'
-                  : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  : 'bg-[var(--accent-2)] text-white hover:bg-[var(--accent-2-hover)]'
               }`}
             >
               {node.completed ? t(UI.topic.reopens, lang) : t(UI.topic.finishBranch, lang)}
@@ -321,3 +390,4 @@ export default function TopicPage() {
     </div>
   );
 }
+

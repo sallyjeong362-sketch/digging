@@ -8,8 +8,16 @@ export const UI = {
   },
   nav: {
     explore: { ko: '탐구하기', en: 'Explore' },
-    map: { ko: '나의 탐구 지도', en: 'My Map' },
+    map: { ko: '탐구 지도', en: 'My Map' },
     home: { ko: '홈', en: 'Home' },
+  },
+  shell: {
+    tagline: { ko: '꼬리에 꼬리를 무는 탐구실', en: 'A workshop for chasing curiosity' },
+    note: {
+      ko: '작은 질문 하나가\n놀라운 발견의 시작이에요.',
+      en: 'One small question\nis where discovery begins.',
+    },
+    points: { ko: '포인트', en: 'points' },
   },
   home: {
     heading: { ko: '무엇에 관심이 있나요?', en: 'What are you interested in?' },
@@ -97,6 +105,11 @@ export const UI = {
     badgeLv1: { ko: '🌱 탐구 새싹', en: '🌱 Curious Sprout' },
     badgeLv2: { ko: '🌿 파고드는 자', en: '🌿 Deep Digger' },
     badgeLv3: { ko: '🌳 탐구의 달인', en: '🌳 Master Explorer' },
+    nextLevelAt: { ko: '다음 레벨까지', en: 'to next level' },
+    maxLevel: { ko: '최고 레벨이에요!', en: 'You\'ve hit the top level!' },
+    badgesHeading: { ko: '모은 뱃지', en: 'Badges earned' },
+    lockedLabel: { ko: '잠김', en: 'Locked' },
+    treeHeading: { ko: '탐구 기록', en: 'Exploration history' },
     empty: { ko: '아직 탐구한 주제가 없어요.', en: 'You haven\'t explored anything yet.' },
     resetButton: { ko: '전체 기록 초기화', en: 'Reset all progress' },
     resetConfirm: { ko: '정말 모든 탐구 기록을 지울까요? 되돌릴 수 없어요.', en: 'Really erase all exploration history? This can\'t be undone.' },

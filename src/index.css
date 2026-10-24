@@ -1,89 +1,115 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #fafaf9;
+  --font-sans: 'PretendardVariable', Pretendard, -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+
+  --bg: #f2f0e4;
   --surface: #ffffff;
-  --surface-2: #f5f5f4;
-  --border: #e7e5e4;
-  --border-strong: #d6d3d1;
-  --text: #1c1917;
-  --text-muted: #78716c;
-  --text-faint: #a8a29e;
+  --surface-2: #ece7d8;
+  --border: #e0dac5;
+  --border-strong: #cdc3a6;
+  --text: #2a2117;
+  --text-muted: #796f59;
+  --text-faint: #a89c80;
 
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --link: #2563eb;
-  --accent-soft: #eff6ff;
-  --accent-soft-border: #bfdbfe;
-  --accent-soft-text: #1e40af;
+  --accent: #d98a1f;
+  --accent-hover: #bc7515;
+  --link: #a8630f;
+  --accent-soft: #fbf0dc;
+  --accent-soft-border: #f0d8a6;
+  --accent-soft-text: #8a5a10;
 
-  --ink: #292524;
-  --ink-hover: #1c1917;
+  --accent-2: #5c7a52;
+  --accent-2-hover: #4a6442;
+  --accent-2-soft: #e7edda;
+  --accent-2-soft-border: #cddabb;
+  --accent-2-soft-text: #3f5636;
+
+  --ink: #2a2117;
+  --ink-hover: #1a140d;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #16130f;
-    --surface: #221e1a;
-    --surface-2: #2a251f;
-    --border: #3a332c;
-    --border-strong: #4c443a;
-    --text: #f3ede5;
-    --text-muted: #ab9c8c;
-    --text-faint: #756a5d;
+    --bg: #19140d;
+    --surface: #231c13;
+    --surface-2: #2b2317;
+    --border: #3a2f1e;
+    --border-strong: #4c3f27;
+    --text: #f3ecdc;
+    --text-muted: #b6a68a;
+    --text-faint: #7c7058;
 
-    --accent: #3b82f6;
-    --accent-hover: #60a5fa;
-    --link: #93c5fd;
-    --accent-soft: #17233a;
-    --accent-soft-border: #2c4266;
-    --accent-soft-text: #bfdbfe;
+    --accent: #f0a93e;
+    --accent-hover: #f5be68;
+    --link: #f0a93e;
+    --accent-soft: #3a2a12;
+    --accent-soft-border: #5c421b;
+    --accent-soft-text: #f0c27a;
 
-    --ink: #e7dfd5;
-    --ink-hover: #f3ede5;
+    --accent-2: #8fb37e;
+    --accent-2-hover: #a6c796;
+    --accent-2-soft: #212b1a;
+    --accent-2-soft-border: #39492c;
+    --accent-2-soft-text: #b7d2a8;
+
+    --ink: #e7dcc2;
+    --ink-hover: #f3ecdc;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #16130f;
-  --surface: #221e1a;
-  --surface-2: #2a251f;
-  --border: #3a332c;
-  --border-strong: #4c443a;
-  --text: #f3ede5;
-  --text-muted: #ab9c8c;
-  --text-faint: #756a5d;
+  --bg: #19140d;
+  --surface: #231c13;
+  --surface-2: #2b2317;
+  --border: #3a2f1e;
+  --border-strong: #4c3f27;
+  --text: #f3ecdc;
+  --text-muted: #b6a68a;
+  --text-faint: #7c7058;
 
-  --accent: #3b82f6;
-  --accent-hover: #60a5fa;
-  --link: #93c5fd;
-  --accent-soft: #17233a;
-  --accent-soft-border: #2c4266;
-  --accent-soft-text: #bfdbfe;
+  --accent: #f0a93e;
+  --accent-hover: #f5be68;
+  --link: #f0a93e;
+  --accent-soft: #3a2a12;
+  --accent-soft-border: #5c421b;
+  --accent-soft-text: #f0c27a;
 
-  --ink: #e7dfd5;
-  --ink-hover: #f3ede5;
+  --accent-2: #8fb37e;
+  --accent-2-hover: #a6c796;
+  --accent-2-soft: #212b1a;
+  --accent-2-soft-border: #39492c;
+  --accent-2-soft-text: #b7d2a8;
+
+  --ink: #e7dcc2;
+  --ink-hover: #f3ecdc;
 }
 
 :root[data-theme='light'] {
-  --bg: #fafaf9;
+  --bg: #f2f0e4;
   --surface: #ffffff;
-  --surface-2: #f5f5f4;
-  --border: #e7e5e4;
-  --border-strong: #d6d3d1;
-  --text: #1c1917;
-  --text-muted: #78716c;
-  --text-faint: #a8a29e;
+  --surface-2: #ece7d8;
+  --border: #e0dac5;
+  --border-strong: #cdc3a6;
+  --text: #2a2117;
+  --text-muted: #796f59;
+  --text-faint: #a89c80;
 
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --link: #2563eb;
-  --accent-soft: #eff6ff;
-  --accent-soft-border: #bfdbfe;
-  --accent-soft-text: #1e40af;
+  --accent: #d98a1f;
+  --accent-hover: #bc7515;
+  --link: #a8630f;
+  --accent-soft: #fbf0dc;
+  --accent-soft-border: #f0d8a6;
+  --accent-soft-text: #8a5a10;
 
-  --ink: #292524;
-  --ink-hover: #1c1917;
+  --accent-2: #5c7a52;
+  --accent-2-hover: #4a6442;
+  --accent-2-soft: #e7edda;
+  --accent-2-soft-border: #cddabb;
+  --accent-2-soft-text: #3f5636;
+
+  --ink: #2a2117;
+  --ink-hover: #1a140d;
 }
 
 html {
@@ -91,9 +117,45 @@ html {
   color-scheme: light dark;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-soft-text);
+}
+
+/* Per-category illustrated tile background: each element sets --cat-tint /
+   --cat-tint-dark inline; this picks the right one for the active theme. */
+.category-art {
+  background: var(--cat-tint);
+}
+@media (prefers-color-scheme: dark) {
+  .category-art {
+    background: var(--cat-tint-dark);
+  }
+}
+:root[data-theme='dark'] .category-art {
+  background: var(--cat-tint-dark);
+}
+:root[data-theme='light'] .category-art {
+  background: var(--cat-tint);
 }

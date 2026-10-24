@@ -26,6 +26,9 @@ export interface Interest {
   name: LocalizedText;
   emoji: string;
   gradient: string;
+  /** Soft background tint for the category's illustrated card panel. */
+  tint: string;
+  tintDark: string;
   seedTopicIds: string[];
 }
 

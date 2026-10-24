@@ -47,15 +47,15 @@ export default function ExplorePage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-[var(--text)] sm:text-2xl">{t(UI.explore.heading, lang)}</h1>
-        <Link to="/" className="text-xs font-medium text-[var(--link)] hover:underline">
+        <h1 className="text-xl font-black tracking-tight text-[var(--text)] sm:text-2xl">{t(UI.explore.heading, lang)}</h1>
+        <Link to="/" className="text-xs font-semibold text-[var(--link)] hover:underline">
           {t(UI.explore.editInterests, lang)}
         </Link>
       </div>
 
-      <div className="mt-8 flex flex-col gap-10">
+      <div className="mt-8 flex flex-col gap-11">
         {selected.map((interestId) => {
           const interest = getInterest(interestId);
           if (!interest) return null;
@@ -65,32 +65,41 @@ export default function ExplorePage() {
 
           return (
             <section key={interestId}>
-              <div className="flex items-center gap-2">
-                <span className={`flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br text-lg ${interest.gradient}`}>
-                  {interest.emoji}
-                </span>
+              <div
+                className="flex items-center gap-2.5"
+                style={{ ['--cat-tint' as string]: interest.tint, ['--cat-tint-dark' as string]: interest.tintDark }}
+              >
+                <span className="category-art flex h-9 w-9 items-center justify-center rounded-xl text-lg">{interest.emoji}</span>
                 <h2 className="text-lg font-bold text-[var(--text)]">{t(interest.name, lang)}</h2>
               </div>
 
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid gap-3.5 sm:grid-cols-2">
                 {seeds
                   .filter((seed) => !startedSeedIds.has(seed.id))
                   .map((seed) => (
                     <button
                       key={seed.id}
                       onClick={() => startSeed(seed.id)}
-                      className="flex flex-col items-start gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 text-left transition hover:border-[var(--accent-soft-border)] hover:shadow-sm"
+                      style={{ ['--cat-tint' as string]: interest.tint, ['--cat-tint-dark' as string]: interest.tintDark }}
+                      className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-left transition hover:-translate-y-0.5 hover:border-[var(--accent-soft-border)] hover:shadow-lg"
                     >
-                      <span className="font-semibold text-[var(--text)]">{t(seed.title, lang)}</span>
-                      <span className="text-xs leading-relaxed text-[var(--text-muted)]">{t(seed.blurb, lang)}</span>
-                      <span className="mt-1 text-xs font-semibold text-[var(--link)]">{t(UI.explore.startButton, lang)}</span>
+                      <div className="category-art flex h-16 items-center px-4">
+                        <span className="text-3xl drop-shadow-sm transition group-hover:scale-110">{interest.emoji}</span>
+                      </div>
+                      <div className="p-4">
+                        <span className="font-bold text-[var(--text)]">{t(seed.title, lang)}</span>
+                        <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">{t(seed.blurb, lang)}</p>
+                        <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[var(--link)]">
+                          {t(UI.explore.startButton, lang)}
+                        </span>
+                      </div>
                     </button>
                   ))}
               </div>
 
               {roots.length > 0 && (
                 <div className="mt-4">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-faint)]">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-wide text-[var(--text-faint)]">
                     {t(UI.explore.myBranches, lang)}
                   </p>
                   <div className="flex flex-col gap-2">
@@ -100,13 +109,13 @@ export default function ExplorePage() {
                         to={`/topic/${root.id}`}
                         className="flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm transition hover:border-[var(--accent-soft-border)] hover:bg-[var(--surface)]"
                       >
-                        <span className="font-medium text-[var(--text)]">
+                        <span className="font-semibold text-[var(--text)]">
                           {lang === 'ko' ? root.titleKo : root.titleEn}
                         </span>
                         <span className="flex items-center gap-2 text-xs text-[var(--text-faint)]">
-                          {root.completed && <span className="text-emerald-600 dark:text-emerald-400">{t(UI.topic.finished, lang)}</span>}
-                          <span>{countDescendants(nodes, root.id)} · {t(UI.explore.depthLabel, lang)} {maxDepth(nodes, root.id) + 1}</span>
-                          <span className="text-[var(--link)]">{t(UI.explore.continueButton, lang)}</span>
+                          {root.completed && <span className="font-semibold text-[var(--accent-2)]">{t(UI.topic.finished, lang)}</span>}
+                          <span className="tabular-nums">{countDescendants(nodes, root.id)} · {t(UI.explore.depthLabel, lang)} {maxDepth(nodes, root.id) + 1}</span>
+                          <span className="font-bold text-[var(--link)]">{t(UI.explore.continueButton, lang)}</span>
                         </span>
                       </Link>
                     ))}

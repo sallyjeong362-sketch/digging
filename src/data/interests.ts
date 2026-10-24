@@ -5,18 +5,18 @@ import type { Interest, TopicSeed } from '../types';
  * recommendations (its "interests" taxonomy shown during onboarding / ads preferences).
  */
 export const INTERESTS: Interest[] = [
-  { id: 'gaming', name: { ko: '게임', en: 'Gaming' }, emoji: '🎮', gradient: 'from-violet-500 to-purple-600', seedTopicIds: ['gaming-history', 'gaming-physics'] },
-  { id: 'music', name: { ko: '음악', en: 'Music' }, emoji: '🎵', gradient: 'from-pink-500 to-rose-500', seedTopicIds: ['music-jazz', 'music-orchestra'] },
-  { id: 'sports', name: { ko: '스포츠', en: 'Sports' }, emoji: '⚽', gradient: 'from-emerald-500 to-teal-600', seedTopicIds: ['sports-olympics', 'sports-soccer-tactics'] },
-  { id: 'science-tech', name: { ko: '과학과 기술', en: 'Science & Tech' }, emoji: '🔬', gradient: 'from-sky-500 to-blue-600', seedTopicIds: ['tech-ai', 'science-renewable-energy'] },
-  { id: 'food', name: { ko: '요리', en: 'Food & Cooking' }, emoji: '🍳', gradient: 'from-amber-500 to-orange-600', seedTopicIds: ['food-fermentation', 'food-world-dishes'] },
-  { id: 'fashion', name: { ko: '패션과 뷰티', en: 'Fashion & Beauty' }, emoji: '👗', gradient: 'from-fuchsia-500 to-pink-600', seedTopicIds: ['fashion-history', 'fashion-sustainable'] },
-  { id: 'travel', name: { ko: '여행과 문화', en: 'Travel & Culture' }, emoji: '✈️', gradient: 'from-cyan-500 to-sky-600', seedTopicIds: ['travel-heritage', 'travel-festivals'] },
-  { id: 'film', name: { ko: '영화와 애니메이션', en: 'Film & Animation' }, emoji: '🎬', gradient: 'from-slate-600 to-zinc-700', seedTopicIds: ['film-animation', 'film-cinematography'] },
-  { id: 'animals', name: { ko: '동물과 자연', en: 'Animals & Nature' }, emoji: '🐾', gradient: 'from-lime-500 to-green-600', seedTopicIds: ['animals-ecosystem', 'animals-endangered'] },
-  { id: 'space', name: { ko: '우주', en: 'Space' }, emoji: '🚀', gradient: 'from-indigo-500 to-violet-700', seedTopicIds: ['space-solar-system', 'space-black-holes'] },
-  { id: 'history', name: { ko: '역사', en: 'History' }, emoji: '🏛️', gradient: 'from-yellow-600 to-amber-700', seedTopicIds: ['history-egypt', 'history-world-wars'] },
-  { id: 'art', name: { ko: '미술과 디자인', en: 'Art & Design' }, emoji: '🎨', gradient: 'from-red-500 to-rose-600', seedTopicIds: ['art-color-theory', 'art-famous-painters'] },
+  { id: 'gaming', name: { ko: '게임', en: 'Gaming' }, emoji: '🎮', gradient: 'from-violet-500 to-purple-600', tint: '#ece4fb', tintDark: '#261f3a', seedTopicIds: ['gaming-history', 'gaming-physics'] },
+  { id: 'music', name: { ko: '음악', en: 'Music' }, emoji: '🎵', gradient: 'from-pink-500 to-rose-500', tint: '#fbe6ee', tintDark: '#341f29', seedTopicIds: ['music-jazz', 'music-orchestra'] },
+  { id: 'sports', name: { ko: '스포츠', en: 'Sports' }, emoji: '⚽', gradient: 'from-emerald-500 to-teal-600', tint: '#e2f2ea', tintDark: '#14302a', seedTopicIds: ['sports-olympics', 'sports-soccer-tactics'] },
+  { id: 'science-tech', name: { ko: '과학과 기술', en: 'Science & Tech' }, emoji: '🔬', gradient: 'from-sky-500 to-blue-600', tint: '#e3eefb', tintDark: '#16263a', seedTopicIds: ['tech-ai', 'science-renewable-energy'] },
+  { id: 'food', name: { ko: '요리', en: 'Food & Cooking' }, emoji: '🍳', gradient: 'from-amber-500 to-orange-600', tint: '#fbecd4', tintDark: '#352a16', seedTopicIds: ['food-fermentation', 'food-world-dishes'] },
+  { id: 'fashion', name: { ko: '패션과 뷰티', en: 'Fashion & Beauty' }, emoji: '👗', gradient: 'from-fuchsia-500 to-pink-600', tint: '#fce3ef', tintDark: '#371f2b', seedTopicIds: ['fashion-history', 'fashion-sustainable'] },
+  { id: 'travel', name: { ko: '여행과 문화', en: 'Travel & Culture' }, emoji: '✈️', gradient: 'from-cyan-500 to-sky-600', tint: '#e0f2f3', tintDark: '#11292c', seedTopicIds: ['travel-heritage', 'travel-festivals'] },
+  { id: 'film', name: { ko: '영화와 애니메이션', en: 'Film & Animation' }, emoji: '🎬', gradient: 'from-slate-600 to-zinc-700', tint: '#e8e8f0', tintDark: '#22232e', seedTopicIds: ['film-animation', 'film-cinematography'] },
+  { id: 'animals', name: { ko: '동물과 자연', en: 'Animals & Nature' }, emoji: '🐾', gradient: 'from-lime-500 to-green-600', tint: '#eaf2de', tintDark: '#212c18', seedTopicIds: ['animals-ecosystem', 'animals-endangered'] },
+  { id: 'space', name: { ko: '우주', en: 'Space' }, emoji: '🚀', gradient: 'from-indigo-500 to-violet-700', tint: '#e4e6fb', tintDark: '#1f2140', seedTopicIds: ['space-solar-system', 'space-black-holes'] },
+  { id: 'history', name: { ko: '역사', en: 'History' }, emoji: '🏛️', gradient: 'from-yellow-600 to-amber-700', tint: '#f2e7d2', tintDark: '#302918', seedTopicIds: ['history-egypt', 'history-world-wars'] },
+  { id: 'art', name: { ko: '미술과 디자인', en: 'Art & Design' }, emoji: '🎨', gradient: 'from-red-500 to-rose-600', tint: '#fbe1de', tintDark: '#371e1b', seedTopicIds: ['art-color-theory', 'art-famous-painters'] },
 ];
 
 export const TOPIC_SEEDS: TopicSeed[] = [
